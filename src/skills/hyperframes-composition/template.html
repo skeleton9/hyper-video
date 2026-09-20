@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Composition</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        background: #07080b;
+        color: #f4efe4;
+        font-family: "Helvetica Neue", Inter, system-ui, sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      .fill {
+        position: absolute;
+        inset: 0;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+      }
+      h1,
+      p {
+        margin: 0;
+        line-break: strict;
+        overflow-wrap: break-word;
+        white-space: pre-line;
+      }
+      .caption-rail {
+        position: absolute;
+        left: 7%;
+        right: 7%;
+        bottom: 8%;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+      }
+      .caption {
+        display: inline-block;
+        max-width: 100%;
+        margin: 0;
+        padding: 14px 32px;
+        border-radius: 10px;
+        background: rgba(8, 10, 14, 0.62);
+        font-size: 40px;
+        line-height: 1.35;
+        letter-spacing: 0.03em;
+        text-align: center;
+        color: #f7f2e8;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="8"
+    >
+      <section id="scene-hero" class="clip" data-start="0" data-duration="8" data-track-index="1">
+        <div class="fill" style="background: #101218"></div>
+        <div
+          id="hero-copy"
+          style="
+            position: absolute;
+            left: 160px;
+            top: 360px;
+            width: 1400px;
+            display: block;
+          "
+        >
+          <p id="eyebrow" style="font-size: 28px; letter-spacing: 0.28em; text-transform: uppercase; color: #e8b86d">
+            Hyper Video
+          </p>
+          <h1 id="title" style="margin-top: 24px; font-size: 120px; line-height: 1.05; letter-spacing: -0.04em">
+            把想法做成片子
+          </h1>
+        </div>
+      </section>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.2);
+      tl.fromTo("#title", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.35);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

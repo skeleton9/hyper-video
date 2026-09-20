@@ -1,0 +1,35 @@
+{
+	"name": "hyper-video",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "npm run build:ui && vite dev",
+		"dev:ui": "vite build --watch --config vite.config.ui.ts",
+		"build": "vite build && npm run build:ui",
+		"build:ui": "vite build --config vite.config.ui.ts",
+		"start": "node dist/server.mjs",
+		"check:types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@earendil-works/pi-ai": "^0.83.0",
+		"@flue/react": "^2.1.0",
+		"@flue/runtime": "^2.1.0",
+		"@flue/sdk": "^2.1.0",
+		"@hono/node-server": "^2.1.1",
+		"hono": "^4.12.32",
+		"hyperframes": "^0.8.52",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"valibot": "^1.1.0"
+	},
+	"devDependencies": {
+		"@flue/cli": "^2.1.0",
+		"@flue/vite": "^2.1.0",
+		"@types/node": "^22.10.10",
+		"@types/react": "^19.1.8",
+		"@types/react-dom": "^19.1.6",
+		"@vitejs/plugin-react": "^5.0.0",
+		"typescript": "^7.0.2",
+		"vite": "^8.0.14"
+	}
+}
