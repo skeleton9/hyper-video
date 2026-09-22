@@ -12,12 +12,12 @@ const CLAUSE_MARK = /[，,、；;]/;
 const PUNCT_ONLY = /^[\s。！？；!?;，,、.："”''""（）()【】《》…—–―\-]+$/;
 const HANGING_END = /[的了着过和与且而却也还就都把被从对向给让到得地与]$/;
 const MIN_DURATION = 0.55;
-const MIN_CLAUSE_WEIGHT = 4;
-const MAX_WEIGHT = 16;
-const HARD_WEIGHT = 20;
-const MAX_SPAN = 2.6;
-const HARD_SPAN = 3.2;
-const MERGE_WEIGHT = 22;
+const MIN_CLAUSE_WEIGHT = 8;
+const MAX_WEIGHT = 20;
+const HARD_WEIGHT = 24;
+const MAX_SPAN = 3.0;
+const HARD_SPAN = 3.6;
+const MERGE_WEIGHT = 26;
 
 export function roundTime(value: number): number {
 	return Math.round(value * 1000) / 1000;
@@ -58,6 +58,10 @@ function isPunctToken(word: string): boolean {
 
 function tidyCaptionText(text: string): string {
 	return sanitizeNarration(text).replace(/\s+/g, '');
+}
+
+function finishCaptionText(text: string): string {
+	return tidyCaptionText(text).replace(/[，,、。.;；:：…]+$/g, '');
 }
 
 function letterCount(text: string): number {
@@ -196,7 +200,9 @@ export function groupCaptionCues(words: TtsWord[], audioDuration?: number): Capt
 		last.duration = roundTime(Math.max(0.4, audioDuration - last.start));
 	}
 
-	return merged.filter((cue) => cue.text);
+	return merged
+		.map((cue) => ({ ...cue, text: finishCaptionText(cue.text) }))
+		.filter((cue) => cue.text);
 }
 
 function splitSpokenClauses(text: string): string[] {
@@ -292,7 +298,7 @@ export function wrapOnScreenCopy(text: string, maxChars = 10): string {
 }
 
 function maxCharsForCopy(tag: string, attrs: string): number {
-	if (/\bcaption\b/.test(attrs)) return 14;
+	if (/\bcaption\b/.test(attrs)) return 18;
 	if (/\btitle-sm\b|\bbig\b/.test(attrs)) return 9;
 	if (/\btitle\b/.test(attrs)) return 8;
 	if (/\bquote\b|\bhook-q\b|\bclosing\b/.test(attrs)) return 10;
@@ -327,7 +333,7 @@ export function estimateCuesFromText(text: string, duration: number): CaptionCue
 			id: cueId(index),
 			start: roundTime(cursor),
 			duration: roundTime(span),
-			text: part,
+			text: finishCaptionText(part),
 		};
 		cursor += span;
 		return cue;
@@ -345,8 +351,8 @@ export function escapeHtml(text: string): string {
 const CAPTION_CSS = `
       .caption-rail {
         position: absolute;
-        left: 7%;
-        right: 7%;
+        left: 4%;
+        right: 4%;
         bottom: 8%;
         display: flex;
         justify-content: center;
@@ -356,7 +362,7 @@ const CAPTION_CSS = `
         display: inline-block;
         max-width: 100%;
         margin: 0;
-        padding: 14px 32px;
+        padding: 14px 24px;
         border-radius: 10px;
         background: rgba(8, 10, 14, 0.62);
         font-size: 40px;

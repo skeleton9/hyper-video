@@ -72,6 +72,7 @@ Do not run raw `hyperframes` shell commands when these tools exist. Do not call 
 - Match narration to on-screen language. Keep the script under ~400 characters unless the user asked for a longer piece.
 - **Never use 「——」 or `--` in 口播, captions, or on-screen copy.** Rewrite: `不是死亡，是爱而不得` not `不是死亡——是爱而不得`.
 - Write spoken clauses that can stand as a caption. Caption grouping splits on commas/periods; do not write lines that only make sense if a word is cut in half.
+- Caption display: drop trailing ，。、；. Keep ？ and ！.
 - **On-screen copy wraps at 断句, not mid-word.** Insert a newline (with `white-space: pre-line`) at `，。！？` so each line is about 8–12 字. Never leave `，` / `。` at the start of a line, and never split a word like `伟大` / `拼了命`. Keep `line-break: strict` on titles.
 
 ## Copy and design

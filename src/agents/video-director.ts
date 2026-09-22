@@ -374,6 +374,7 @@ Voice rules:
 - Never call audio.play() / pause / seek. HyperFrames owns <audio> playback.
 - Keep \`#voiceover\` and \`#caption-*\` as direct children of #root. Captions use class="clip"; the audio tag does not.
 - Spoken copy: no 「——」. Prefer short clauses that end on ，。！？ so captions never hang a comma/period alone or split a word.
+- On-screen captions omit trailing ，。、； and keep ？！.
 - On-screen titles: break lines at ，。！？ using a newline and white-space pre-line. Do not let the browser wrap in the middle of a word.
 - Do not invent API keys or hit the Doubao HTTP API yourself; \`generate_voiceover\` already has the key.
 
